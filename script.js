@@ -1,3 +1,13 @@
+function iosFix() {
+    document.body.style.height = window.innerHeight + "px";
+  }
+  
+  window.addEventListener("resize", iosFix);
+  window.addEventListener("orientationchange", iosFix);
+  iosFix();
+  
+
+
 const envelope = document.getElementById("envelope-container");
 const letter = document.getElementById("letter-container");
 

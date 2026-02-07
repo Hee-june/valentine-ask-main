@@ -2,7 +2,8 @@
 
 body {
   margin: 0;
-  height: 100vh;
+  height: 100dvh;
+  min-height: -webkit-fill-available;
 
   display: flex;
   justify-content: center;
@@ -14,15 +15,19 @@ body {
   font-family: 'Jua', sans-serif;
 }
 
+
 /* 봉투 */
 #envelope { width: 140px; }
 
 /* ===== 핵심 ===== */
 .letter-window {
-  width: 96vw;
-  max-width: 420px;
+  width: 92vw;
+  max-width: 410px;
 
-  aspect-ratio: 1 / 1.05;   /* 이미지 비율 맞춤 */
+  max-height: 86dvh;     /* ← 이게 핵심 */
+  aspect-ratio: 1 / 1.05;
+
+
 
   background-image: url("window.png");
   background-size: contain;
@@ -34,10 +39,15 @@ body {
   align-items: center;
 
   /* 내용이 체크무늬 안쪽에 오게 */
-  padding-top: 26%;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-top: 21%;
+  padding-left: 8%;
+  padding-right: 8%;
+
+  box-sizing: border-box;
 }
+
+
+  
 
 /* 내용 */
 .cat { width: 140px; }
@@ -74,13 +84,23 @@ body {
   100% { transform: translateY(-160px); opacity:0; }
 }
 
-/* 모바일 */
-@media (max-width: 600px) {
-  .letter-window {
-    padding-top: 28%;
+
+
+@media (max-width: 430px) {   /* 아이폰16프로 너비 */
+
+    .letter-window {
+      max-height: 84dvh;
+      padding-top: 20%;
+    }
+  
+    h1 { font-size: 16.5px; }
+  
+    .cat { width: 108px; }
+  
+    .btn { width: 76px; }
+  
+    #game-area {
+      font-size: 14.5px;
+    }
   }
-
-  .cat { width: 120px; }
-
-  .btn { width: 82px; }
-}
+  
