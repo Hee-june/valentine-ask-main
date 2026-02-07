@@ -72,23 +72,78 @@ function createHeart() {
   setTimeout(() => heart.remove(), 1400);
 }
 
-// ===== YES 클릭 (최종 통합) =====
+
+// ===== 🐱 YES → 상하이 잡기 미션 =====
+const meow = document.getElementById('meow');
+
+let catchMode = false;
+let caught = 0;
+const NEED = 5;
+
 yesBtn.addEventListener("click", () => {
+  if (catchMode) return;
 
-  // 1. 텍스트 변경
-  title.textContent = "Yippeeee!";
+  catchMode = true;
+  caught = 0;
 
-  // 2. 고양이 변경
+  alert("상하이히주이 5마리를 잡아주세요 ฅ^•ﻌ•^ฅ");
+
+  for (let i = 0; i < NEED; i++) {
+    createCatchHeart();
+  }
+});
+
+function randomPos() {
+  return {
+    x: Math.random() * 88 + 5,
+    y: Math.random() * 80 + 5
+  };
+}
+
+function createCatchHeart() {
+  const heart = document.createElement("div");
+  heart.className = "catch-heart";
+
+  let pos = randomPos();
+  heart.style.left = pos.x + "vw";
+  heart.style.top = pos.y + "vh";
+
+  // 도망!
+  heart.addEventListener("mouseenter", () => {
+    const run = randomPos();
+    heart.style.left = run.x + "vw";
+    heart.style.top = run.y + "vh";
+  });
+
+  heart.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    // 냥소리
+    meow.currentTime = 0;
+    meow.play();
+
+    heart.remove();
+    caught++;
+
+    if (caught >= NEED) {
+      openFinal();
+    }
+  });
+
+  document.body.appendChild(heart);
+}
+
+function openFinal() {
+  // 기존 엔딩 로직 그대로 재사용 💖
+  title.textContent = "꺄아아앙 ㅉ ㅏ기 알라부 이예이예잉!";
   catImg.src = "cat_dance.gif";
 
-  // 3. 폭죽 효과
   for (let i = 0; i < 18; i++) {
     setTimeout(createHeart, i * 70);
   }
 
-  // 4. 화면 마무리
   document.querySelector(".letter-window").classList.add("final");
 
   buttons.style.display = "none";
   finalText.style.display = "block";
-});
+}

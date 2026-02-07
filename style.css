@@ -1,5 +1,4 @@
-/* 구글폰트 불러오기 */
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@font-face { font-family: 'RoundedFixedsys'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff'); font-weight: normal; font-display: swap; }
 
 
 body {
@@ -9,13 +8,13 @@ body {
     justify-content: center;
     align-items: center;
     background-image: url("heart-bg.jpg");
-    font-family: 'Jua' , sans-serif;
+    font-family: 'RoundedFixedsys' , sans-serif;
 }
 
 
 
 h1, p, .btn {
-  font-family: 'Jua', sans-serif;
+  font-family: 'RoundedFixedsys', sans-serif;
 }
 
 /* Envelope Screen */
@@ -232,5 +231,28 @@ display: inline-block;
     #envelope-container p {
       font-size: 18px;
     }
+  }
+  
+  /* ===== 잡는 상하이(?) 이미지 ===== */
+.catch-heart {
+    position: fixed;
+    width: 70px;
+    height: 70px;
+  
+    background-image: url("shanghai.PNG");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  
+    cursor: pointer;
+    z-index: 9999;
+    transition: all 0.35s ease;
+  
+    animation: float 1.1s infinite alternate ease-in-out;
+  }
+  
+  @keyframes float {
+    from { transform: translateY(0px) rotate(-4deg); }
+    to   { transform: translateY(-10px) rotate(4deg); }
   }
   
