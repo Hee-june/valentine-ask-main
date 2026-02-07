@@ -1,106 +1,236 @@
+/* 구글폰트 불러오기 */
 @import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
+
 body {
-  margin: 0;
-  height: 100dvh;
-  min-height: -webkit-fill-available;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("heart-bg.jpg");
+    font-family: 'Jua' , sans-serif;
+}
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
-  background-image: url("heart-bg.jpg");
-  background-size: cover;
 
+h1, p, .btn {
   font-family: 'Jua', sans-serif;
 }
 
+/* Envelope Screen */
+#envelope-container {
+    text-align: center;
+    cursor:pointer;
+}
 
-/* 봉투 */
-#envelope { width: 140px; }
+@keyframes pulse {
+    0% {
+        transform:scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 
-/* ===== 핵심 ===== */
-.letter-window {
-  width: 92vw;
-  max-width: 410px;
+#envelope{
+    width: 200px;
+    animation: pulse 1.5s infinite;
+    cursor: pointer;
+}
 
-  max-height: 86dvh;     /* ← 이게 핵심 */
-  aspect-ratio: 1 / 1.05;
+#letter-container{
+    display: none;
+    position:fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+}
 
+.letter-window{
+    width: 90vw;
+    max-width: 800px;
+    aspect-ratio: 3/2;
+    padding: 20px 20px 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url("window.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 12px;
+    gap: 1px;
+    padding-top: 180px;
 
+    transform: scale(1.2);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
 
-  background-image: url("window.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+.letter-window.open {
+    transform: scale(1);
+    opacity: 1;
+}
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+h1 {
+    font-size: 26px;
+    margin:0;
+}
 
-  /* 내용이 체크무늬 안쪽에 오게 */
-  padding-top: 21%;
-  padding-left: 8%;
-  padding-right: 8%;
+p {
+    font-size: 40px;
+}
 
-  box-sizing: border-box;
+/* Cat */
+
+.cat {
+    width: 220px;
+    margin: 10px 0;
+    transition: width 0.4s ease;
 }
 
 
+
+.letter-window.final .cat {
+    width: 180px;
+}
+
+/* buttons */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+}
+
+.no-wrapper{
+    position:relative;
+}
+
+.btn {
+    width: 110px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.yes-btn,
+.no-btn {
+width: 120px;
+height: auto;
+display: inline-block;
+}
+
+.yes-btn {
+    position: relative;
+    z-index: 2;
+    transform-origin: center center;
+    transition: transform 0.3s ease;
+}
+
+.no-btn {
+    z-index: 1;
+    position: relative;
+    transition: transform 0.15s ease;
+    cursor: default;
+}
+
+.final-text{
+    font-size: 22px;
+    line-height: 1.4;
+    text-align: center;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgba(255,240,240,0.5);
+    border-radius: 12px;
+}
+
+/* ===== 하트 폭죽 ===== */
+#firework-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+  
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: fly 1.4s ease-out forwards;
+  }
+  
+  @keyframes fly {
+    0% {
+      transform: translateY(0) scale(0.6);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-160px) scale(1.4);
+      opacity: 0;
+    }
+  }
   
 
-/* 내용 */
-.cat { width: 140px; }
+/* ===== 💘 아기자기 모바일 버전 ===== */
+@media (max-width: 600px) {
 
-#game-area {
-  width: 100%;
-  font-size: 16px;
-  text-align: center;
-}
-
-/* 하트 */
-.find-heart {
-  position: absolute;
-  font-size: 32px;
-}
-
-/* 버튼 */
-.buttons {
-  display: flex;
-  gap: 14px;
-}
-
-.btn { width: 90px; }
-
-/* 폭죽 */
-.heart {
-  position: absolute;
-  font-size: 24px;
-  animation: fly 1.4s forwards;
-}
-
-@keyframes fly {
-  0% { transform: translateY(0); opacity:1; }
-  100% { transform: translateY(-160px); opacity:0; }
-}
-
-
-
-@media (max-width: 430px) {   /* 아이폰16프로 너비 */
-
+    /* 창 전체를 더 작고 귀엽게 */
     .letter-window {
-      max-height: 84dvh;
-      padding-top: 20%;
+      width: 92vw;
+      aspect-ratio: auto;
+      padding-top: 110px;
+      gap: 6px;
+      transform: scale(1.1);
     }
   
-    h1 { font-size: 16.5px; }
+    /* 제목 */
+    h1 {
+      font-size: 18px;
+      letter-spacing: -0.3px;
+    }
   
-    .cat { width: 108px; }
+    /* 일반 글씨 */
+    p {
+      font-size: 20px;
+    }
   
-    .btn { width: 76px; }
+    /* 고양이 이미지 */
+    .cat {
+      width: 150px;
+      margin: 4px 0;
+    }
   
-    #game-area {
-      font-size: 14.5px;
+    .letter-window.final .cat {
+      width: 120px;
+    }
+  
+    /* 버튼 더 미니 */
+    .btn {
+      width: 82px;
+    }
+  
+    .buttons {
+      gap: 10px;
+    }
+  
+    /* 마지막 문구 박스 */
+    .final-text {
+      font-size: 15px;
+      padding: 6px 10px;
+    }
+  
+    /* 봉투 화면도 작게 */
+    #envelope {
+      width: 120px;
+    }
+  
+    #envelope-container p {
+      font-size: 18px;
     }
   }
   
