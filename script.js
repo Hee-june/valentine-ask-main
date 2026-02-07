@@ -3,12 +3,15 @@ const envelope = document.getElementById("envelope-container");
 const letter = document.getElementById("letter-container");
 
 const noBtn = document.querySelector(".no-btn");
-const yesBtn = document.querySelector(".btn[alt='Yes']");
+const yesBtn = document.querySelector(".yes-btn");
 
 const title = document.getElementById("letter-title");
 const catImg = document.getElementById("letter-cat");
 const buttons = document.getElementById("letter-buttons");
 const finalText = document.getElementById("final-text");
+
+const meow = document.getElementById("meow");
+const bubble = document.getElementById("bubble");
 
 // ===== 봉투 클릭 =====
 envelope.addEventListener("click", () => {
@@ -32,7 +35,7 @@ noBtn.addEventListener("mouseover", () => {
   noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
 });
 
-// ===== 💔 NO 버튼 멘트 =====
+// ===== NO 버튼 멘트 =====
 const noTexts = [
   "엥 무야?",
   "잘못 누른 거지?ㅡㅡ",
@@ -58,7 +61,25 @@ noBtn.addEventListener("click", () => {
   }
 });
 
-// ===== 💖 하트 폭죽 함수 =====
+// ===== 말풍선 =====
+function showBubble(text) {
+  bubble.textContent = text;
+  bubble.classList.remove("hidden");
+
+  setTimeout(() => {
+    bubble.classList.add("hidden");
+  }, 1000);
+}
+
+// ===== 위치 랜덤 =====
+function randomPos() {
+  return {
+    x: Math.random() * 86 + 7,
+    y: Math.random() * 76 + 10
+  };
+}
+
+// ===== 💖 하트 폭죽 =====
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -72,57 +93,33 @@ function createHeart() {
   setTimeout(() => heart.remove(), 1400);
 }
 
+// =================================================
+// 🐱 상하이 잡기 게임 핵심 로직
+// =================================================
 
-// ===== 🐱 YES → 상하이 잡기 미션 =====
-// ===== 🐱 러블리 게임맛 상하이 =====
-const meow = document.getElementById('meow');
-const counter = document.getElementById('counter');
-const bubble = document.getElementById('bubble');
-
-let catchMode = false;
 let caught = 0;
 const NEED = 5;
+let gameStarted = false;
 
 yesBtn.addEventListener("click", () => {
-  if (catchMode) return;
+  if (gameStarted) return;
 
-  catchMode = true;
+  gameStarted = true;
   caught = 0;
-  updateCounter();
 
-  showBubble("상하이 잡기 시작! 💖");
+  showBubble("상하이히주이 5마리 잡아죠 💕");
 
   for (let i = 0; i < NEED; i++) {
     createCatchHeart(i);
   }
 });
 
-function updateCounter() {
-  counter.textContent = `상하이: ${caught} / ${NEED}`;
-}
-
-function showBubble(text) {
-  bubble.textContent = text;
-  bubble.classList.remove("hidden");
-
-  setTimeout(() => {
-    bubble.classList.add("hidden");
-  }, 900);
-}
-
-function randomPos() {
-  return {
-    x: Math.random() * 86 + 7,
-    y: Math.random() * 76 + 10
-  };
-}
-
 function createCatchHeart(index) {
   const heart = document.createElement("div");
   heart.className = "catch-heart";
 
   // 마지막 한 마리는 왕상하이 👑
-  if (index === 4) {
+  if (index === NEED - 1) {
     heart.classList.add("boss");
   }
 
@@ -130,7 +127,7 @@ function createCatchHeart(index) {
   heart.style.left = pos.x + "vw";
   heart.style.top = pos.y + "vh";
 
-  // 잡을수록 빨라짐 💨
+  // 👉 마우스 오면 도망!
   heart.addEventListener("mouseenter", () => {
     const speed = 160 - caught * 22;
 
@@ -141,6 +138,7 @@ function createCatchHeart(index) {
     }, Math.max(speed, 60));
   });
 
+  // 👉 클릭 = 잡기!
   heart.addEventListener("click", (e) => {
     e.stopPropagation();
 
@@ -148,36 +146,36 @@ function createCatchHeart(index) {
     meow.currentTime = 0;
     meow.play();
 
-    // 말풍선 멘트
-    const texts = [
-      "잡았다!",
-      "히히",
-      "체고 💕",
-      "거의 다 왔다!",
-      "왕왕큰애 겟!"
-    ];
-
-    showBubble(texts[Math.min(caught, 4)]);
-
     heart.remove();
     caught++;
-    updateCounter();
 
+    const texts = [
+      "잡았다!",
+      "히히 💖",
+      "체고야!",
+      "거의 다 왔다!",
+      "왕상하이 겟!"
+    ];
+
+    showBubble(texts[Math.min(caught - 1, 4)]);
+
+    // 🎯 5마리 다 잡으면 → 진짜 엔딩
     if (caught >= NEED) {
       setTimeout(() => {
-        showBubble("다 잡았다! 💝");
+        showBubble("다 잡았다! YES 열림 💝");
         openFinal();
-      }, 400);
+      }, 500);
     }
   });
 
   document.body.appendChild(heart);
 }
 
-
+// =================================================
+// 🎀 진짜 YES 엔딩
+// =================================================
 function openFinal() {
-  // 기존 엔딩 로직 그대로 재사용 💖
-  title.textContent = "꺄아아앙 ㅉ ㅏ기 알라부 이예이예잉!";
+  title.textContent = "꺄아아앙 짜기 알라부 💖";
   catImg.src = "cat_dance.gif";
 
   for (let i = 0; i < 18; i++) {
