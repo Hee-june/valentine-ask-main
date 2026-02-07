@@ -1,3 +1,7 @@
+/* 구글폰트 불러오기 */
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+
+
 body {
     margin: 0;
     height: 100vh;
@@ -5,14 +9,12 @@ body {
     justify-content: center;
     align-items: center;
     background-image: url("heart-bg.jpg");
-    font-family: "Pixelify Sans", 'Jua' , sans-serif;
+    font-family: 'Jua' , sans-serif;
 }
 
 
-/* 구글폰트 불러오기 */
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
-body, h1, p, .btn {
+h1, p, .btn {
   font-family: 'Jua', sans-serif;
 }
 
@@ -147,6 +149,32 @@ display: inline-block;
     background-color: rgba(255,240,240,0.5);
     border-radius: 12px;
 }
+
+/* ===== 하트 폭죽 ===== */
+#firework-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 999;
+  }
+  
+  .heart {
+    position: absolute;
+    font-size: 24px;
+    animation: fly 1.4s ease-out forwards;
+  }
+  
+  @keyframes fly {
+    0% {
+      transform: translateY(0) scale(0.6);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-160px) scale(1.4);
+      opacity: 0;
+    }
+  }
+  
 
 /* ===== 💘 아기자기 모바일 버전 ===== */
 @media (max-width: 600px) {

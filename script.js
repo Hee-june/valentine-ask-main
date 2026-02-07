@@ -1,6 +1,7 @@
-// Elements
+// ===== Elements =====
 const envelope = document.getElementById("envelope-container");
 const letter = document.getElementById("letter-container");
+
 const noBtn = document.querySelector(".no-btn");
 const yesBtn = document.querySelector(".btn[alt='Yes']");
 
@@ -9,64 +10,85 @@ const catImg = document.getElementById("letter-cat");
 const buttons = document.getElementById("letter-buttons");
 const finalText = document.getElementById("final-text");
 
-// Click Envelope
-
+// ===== 봉투 클릭 =====
 envelope.addEventListener("click", () => {
-    envelope.style.display = "none";
-    letter.style.display = "flex";
+  envelope.style.display = "none";
+  letter.style.display = "flex";
 
-    setTimeout( () => {
-        document.querySelector(".letter-window").classList.add("open");
-    },50);
+  setTimeout(() => {
+    document.querySelector(".letter-window").classList.add("open");
+  }, 50);
 });
 
-// Logic to move the NO btn
-
+// ===== NO 버튼 도망 =====
 noBtn.addEventListener("mouseover", () => {
-    const min = 200;
-    const max = 200;
+  const distance = 200;
+  const angle = Math.random() * Math.PI * 2;
 
-    const distance = Math.random() * (max - min) + min;
-    const angle = Math.random() * Math.PI * 2;
+  const moveX = Math.cos(angle) * distance;
+  const moveY = Math.sin(angle) * distance;
 
-    const moveX = Math.cos(angle) * distance;
-    const moveY = Math.sin(angle) * distance;
-
-    noBtn.style.transition = "transform 0.3s ease";
-    noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+  noBtn.style.transition = "transform 0.3s ease";
+  noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
 });
 
-// Logic to make YES btn to grow
+// ===== 💔 NO 버튼 멘트 =====
+const noTexts = [
+  "엥 무야?",
+  "잘못 누른 거지?ㅡㅡ",
+  "손 미끄러졌지?",
+  "다시 눌러뱌 😏",
+  "초코압수",
+  "YES만 남아땨!"
+];
 
-// let yesScale = 1;
+let noCount = 0;
 
-// yesBtn.style.position = "relative"
-// yesBtn.style.transformOrigin = "center center";
-// yesBtn.style.transition = "transform 0.3s ease";
+noBtn.addEventListener("click", () => {
+  if (noCount < noTexts.length) {
+    title.textContent = noTexts[noCount];
+    noCount++;
 
-// noBtn.addEventListener("click", () => {
-//     yesScale += 2;
+    const scale = 1 + noCount * 0.15;
+    yesBtn.style.transform = `scale(${scale})`;
+  }
 
-//     if (yesBtn.style.position !== "fixed") {
-//         yesBtn.style.position = "fixed";
-//         yesBtn.style.top = "50%";
-//         yesBtn.style.left = "50%";
-//         yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
-//     }else{
-//         yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
-//     }
-// });
+  if (noCount === noTexts.length) {
+    noBtn.style.display = "none";
+  }
+});
 
-// YES is clicked
+// ===== 💖 하트 폭죽 함수 =====
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "💖";
 
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.top = Math.random() * 80 + "vh";
+
+  document.getElementById("firework-container").appendChild(heart);
+
+  setTimeout(() => heart.remove(), 1400);
+}
+
+// ===== YES 클릭 (최종 통합) =====
 yesBtn.addEventListener("click", () => {
-    title.textContent = "Yippeeee!";
 
-    catImg.src = "cat_dance.gif";
+  // 1. 텍스트 변경
+  title.textContent = "Yippeeee!";
 
-    document.querySelector(".letter-window").classList.add("final");
+  // 2. 고양이 변경
+  catImg.src = "cat_dance.gif";
 
-    buttons.style.display = "none";
+  // 3. 폭죽 효과
+  for (let i = 0; i < 18; i++) {
+    setTimeout(createHeart, i * 70);
+  }
 
-    finalText.style.display = "block";
+  // 4. 화면 마무리
+  document.querySelector(".letter-window").classList.add("final");
+
+  buttons.style.display = "none";
+  finalText.style.display = "block";
 });
