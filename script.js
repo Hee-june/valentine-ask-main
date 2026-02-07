@@ -74,7 +74,10 @@ function createHeart() {
 
 
 // ===== 🐱 YES → 상하이 잡기 미션 =====
+// ===== 🐱 러블리 게임맛 상하이 =====
 const meow = document.getElementById('meow');
+const counter = document.getElementById('counter');
+const bubble = document.getElementById('bubble');
 
 let catchMode = false;
 let caught = 0;
@@ -85,34 +88,57 @@ yesBtn.addEventListener("click", () => {
 
   catchMode = true;
   caught = 0;
+  updateCounter();
 
-  alert("상하이히주이 5마리를 잡아주세요 ฅ^•ﻌ•^ฅ");
+  showBubble("상하이 잡기 시작! 💖");
 
   for (let i = 0; i < NEED; i++) {
-    createCatchHeart();
+    createCatchHeart(i);
   }
 });
 
+function updateCounter() {
+  counter.textContent = `상하이: ${caught} / ${NEED}`;
+}
+
+function showBubble(text) {
+  bubble.textContent = text;
+  bubble.classList.remove("hidden");
+
+  setTimeout(() => {
+    bubble.classList.add("hidden");
+  }, 900);
+}
+
 function randomPos() {
   return {
-    x: Math.random() * 88 + 5,
-    y: Math.random() * 80 + 5
+    x: Math.random() * 86 + 7,
+    y: Math.random() * 76 + 10
   };
 }
 
-function createCatchHeart() {
+function createCatchHeart(index) {
   const heart = document.createElement("div");
   heart.className = "catch-heart";
+
+  // 마지막 한 마리는 왕상하이 👑
+  if (index === 4) {
+    heart.classList.add("boss");
+  }
 
   let pos = randomPos();
   heart.style.left = pos.x + "vw";
   heart.style.top = pos.y + "vh";
 
-  // 도망!
+  // 잡을수록 빨라짐 💨
   heart.addEventListener("mouseenter", () => {
-    const run = randomPos();
-    heart.style.left = run.x + "vw";
-    heart.style.top = run.y + "vh";
+    const speed = 160 - caught * 22;
+
+    setTimeout(() => {
+      const run = randomPos();
+      heart.style.left = run.x + "vw";
+      heart.style.top = run.y + "vh";
+    }, Math.max(speed, 60));
   });
 
   heart.addEventListener("click", (e) => {
@@ -122,16 +148,32 @@ function createCatchHeart() {
     meow.currentTime = 0;
     meow.play();
 
+    // 말풍선 멘트
+    const texts = [
+      "잡았다!",
+      "히히",
+      "체고 💕",
+      "거의 다 왔다!",
+      "왕왕큰애 겟!"
+    ];
+
+    showBubble(texts[Math.min(caught, 4)]);
+
     heart.remove();
     caught++;
+    updateCounter();
 
     if (caught >= NEED) {
-      openFinal();
+      setTimeout(() => {
+        showBubble("다 잡았다! 💝");
+        openFinal();
+      }, 400);
     }
   });
 
   document.body.appendChild(heart);
 }
+
 
 function openFinal() {
   // 기존 엔딩 로직 그대로 재사용 💖

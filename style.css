@@ -256,3 +256,46 @@ display: inline-block;
     to   { transform: translateY(-10px) rotate(4deg); }
   }
   
+
+  /* ===== 게임 UI ===== */
+#game-ui {
+    position: fixed;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    text-align: center;
+    font-family: 'RoundedFixedsys';
+  }
+  
+  #counter {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 6px 14px;
+    border-radius: 14px;
+    font-size: 16px;
+    margin-bottom: 6px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+  
+  #bubble {
+    background: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 15px;
+    animation: pop 0.35s ease;
+  }
+  
+  .hidden { display: none; }
+  
+  @keyframes pop {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  /* 왕상하이 */
+  .catch-heart.boss {
+    width: 110px !important;
+    height: 110px !important;
+    filter: drop-shadow(0 0 8px pink);
+  }
+  
