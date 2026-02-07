@@ -1,69 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-
-  <title>Valentine Game</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>For My Valentine</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- 봉투 화면 -->
+<!-- 봉투 -->
 <div id="envelope-container">
-  <img src="envelope.png" id="envelope" />
-  <p>💌 희준이에게 도착한 편지</p>
+  <img id="envelope" src="envelope.png">
+  <p>Touch the letter 💌</p>
 </div>
 
-<!-- 메인 화면 -->
+<!-- 편지 -->
 <div id="letter-container">
   <div class="letter-window">
 
-    <h1 id="letter-title">내 마음 잠금 해제 게임 💘</h1>
-    <img src="cat_heart.gif" class="cat" id="letter-cat" />
+    <h1 id="letter-title">나랑 발렌타인 할래? 💝</h1>
 
-    <!-- ===== 게임 영역 ===== -->
+    <img id="letter-cat" class="cat" src="cat_heart.gif">
+
+    <!-- 게임 영역 -->
     <div id="game-area">
 
-      <!-- STEP 1 : 하트 찾기 -->
-      <div class="step" id="step1">
-        <p>💖 하트 찾기: <span id="heart-count">0</span> / 5</p>
-        <p class="hint">화면 속 하트를 전부 눌러줘!</p>
+      <!-- 1단계 -->
+      <div id="step1" class="step">
+        💖 하트 찾기 (<span id="heart-count">0</span>/5)
       </div>
 
-      <!-- STEP 2 : 퀴즈 -->
-      <div class="step" id="step2" style="display:none">
-        <p>Q. 수빈이가 제일 좋아하는 사람은?</p>
-        <button class="quiz">초코</button>
-        <button class="quiz correct">희준이</button>
-        <button class="quiz">고양이</button>
+      <!-- 2단계 -->
+      <div id="step2" class="step" style="display:none">
+        <p>Q1. 여찡구가 제일 좋아하는 음식은? </p>
+        <button class="quiz">물꼬 기</button>
+        <button class="quiz correct">꼬 기</button>
+
+        <p>Q2. 여찡구가 제일 좋아하는 사람은?</p>
+        <button class="quiz correct">수비니💖</button>
+        <button class="quiz">팀장님ㅡㅡ;</button>
       </div>
 
-      <!-- STEP 3 : 사랑해 -->
-      <div class="step" id="step3" style="display:none">
-        <p>“사랑해”를 완성해줘!</p>
-        <button class="word">사</button>
-        <button class="word">랑</button>
-        <button class="word">해</button>
-      </div>
-
-      <p id="mission-status">미션을 시작해줘 💗</p>
     </div>
 
-    <!-- ===== 성공 후 등장 ===== -->
+    <!-- 버튼 -->
     <div class="buttons" id="letter-buttons" style="display:none">
-      <img src="yes.png" class="btn yes-btn" alt="Yes" />
-
-      <div class="no-wrapper">
-        <img src="no.png" class="btn no-btn" alt="No" />
-      </div>
+      <img class="btn yes-btn" src="yes.png">
+      <img class="btn no-btn" src="no.png">
     </div>
 
     <p id="final-text" class="final-text" style="display:none">
-      💝 내 발렌타인은 앞으로도 전부 너야 💝
+      낼 데이트하자용💗<br>
+      알라부
     </p>
 
   </div>
@@ -71,6 +60,5 @@
 
 <div id="firework-container"></div>
 <script src="script.js"></script>
-
 </body>
 </html>

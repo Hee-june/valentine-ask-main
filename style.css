@@ -3,114 +3,84 @@
 body {
   margin: 0;
   height: 100vh;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   background-image: url("heart-bg.jpg");
   background-size: cover;
+
   font-family: 'Jua', sans-serif;
 }
 
 /* 봉투 */
-#envelope-container {
-  text-align: center;
-}
+#envelope { width: 140px; }
 
-#envelope {
-  width: 140px;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-/* 메인 */
-#letter-container {
-  display: none;
-  position: fixed;
-  inset: 0;
-  justify-content: center;
-  align-items: center;
-}
-
+/* ===== 핵심 ===== */
 .letter-window {
-  width: 94vw;
-  height: 86vh;
+  width: 96vw;
+  max-width: 420px;
+
+  aspect-ratio: 1 / 1.05;   /* 이미지 비율 맞춤 */
+
+  background-image: url("window.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  background-image: url("window.png");
-  background-size: 100% 100%;
-  padding-top: 100px;
+  /* 내용이 체크무늬 안쪽에 오게 */
+  padding-top: 26%;
+  padding-left: 10%;
+  padding-right: 10%;
 }
 
-.cat {
-  width: 150px;
-  margin: 4px 0;
-}
+/* 내용 */
+.cat { width: 140px; }
 
-/* 게임 영역 */
 #game-area {
-  width: 90%;
-  font-size: 17px;
-}
-
-.step {
-  margin: 10px 0;
-}
-
-/* 터치 버튼 크게! */
-.quiz, .word {
-  margin: 6px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: none;
-  background: #fff0f5;
+  width: 100%;
   font-size: 16px;
-  font-family: 'Jua';
+  text-align: center;
 }
 
-/* 하트 찾기 – 모바일 크기 */
+/* 하트 */
 .find-heart {
   position: absolute;
   font-size: 32px;
-  filter: drop-shadow(0 0 4px white);
 }
 
-/* YES NO */
+/* 버튼 */
 .buttons {
   display: flex;
-  gap: 16px;
+  gap: 14px;
 }
 
-.btn {
-  width: 92px;
-}
+.btn { width: 90px; }
 
 /* 폭죽 */
-#firework-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-}
-
 .heart {
   position: absolute;
-  font-size: 26px;
-  animation: fly 1.4s ease-out forwards;
+  font-size: 24px;
+  animation: fly 1.4s forwards;
 }
 
 @keyframes fly {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-160px); opacity: 0; }
+  0% { transform: translateY(0); opacity:1; }
+  100% { transform: translateY(-160px); opacity:0; }
 }
 
-.final-text {
-  font-size: 16px;
-  padding: 8px 12px;
+/* 모바일 */
+@media (max-width: 600px) {
+  .letter-window {
+    padding-top: 28%;
+  }
+
+  .cat { width: 120px; }
+
+  .btn { width: 82px; }
 }

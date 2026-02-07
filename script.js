@@ -16,7 +16,8 @@ envelope.addEventListener("click", () => {
   spawnHearts();
 });
 
-// ===== 1단계 하트 =====
+
+// ===== 1단계: 하트 찾기 =====
 let heart = 0;
 
 function spawnHearts() {
@@ -25,74 +26,82 @@ function spawnHearts() {
     h.textContent = "💖";
     h.className = "find-heart";
 
-    // 모바일이라 중앙 위주 배치
-    h.style.left = 10 + Math.random() * 70 + "%";
-    h.style.top = 20 + Math.random() * 50 + "%";
+    h.style.left = 20 + Math.random()*60 + "%";
+    h.style.top = 30 + Math.random()*40 + "%";
 
     h.addEventListener("click", () => {
       h.remove();
       heart++;
       document.getElementById("heart-count").textContent = heart;
 
-      if (heart >= 5) goStep2();
+      if (heart >= 5) goQuiz();
     });
 
     document.querySelector(".letter-window").appendChild(h);
   }
 }
 
-function goStep2() {
+function goQuiz() {
   title.textContent = "퀴즈 타임 💌";
   document.getElementById("step1").style.display = "none";
   document.getElementById("step2").style.display = "block";
 }
 
-// ===== 퀴즈 =====
+
+// ===== 2단계: 퀴즈 =====
+let correct = 0;
+
 document.querySelectorAll(".quiz").forEach(btn => {
   btn.addEventListener("click", () => {
+
     if (btn.classList.contains("correct")) {
-      goStep3();
-    } else {
-      btn.textContent = "다시!"
-    }
-  });
-});
-
-function goStep3() {
-  title.textContent = "마지막 단계 ✨";
-  document.getElementById("step2").style.display = "none";
-  document.getElementById("step3").style.display = "block";
-}
-
-// ===== 사랑해 =====
-let wordStep = 0;
-
-document.querySelectorAll(".word").forEach((btn, i) => {
-  btn.addEventListener("click", () => {
-    if (i === wordStep) {
       btn.style.background = "#ffc0cb";
-      wordStep++;
-
-      if (wordStep >= 3) finishGame();
+      correct++;
+    } else {
+      btn.textContent = "땡!"
     }
+
+    if (correct >= 2) finishGame();
   });
 });
 
-// ===== 성공 =====
+
+// ===== 성공 → 버튼 등장 =====
 function finishGame() {
   title.textContent = "이제 선택해줘 💗";
   document.getElementById("game-area").style.display = "none";
   buttons.style.display = "flex";
 }
 
-// ===== NO 도망 (약하게) =====
-noBtn.addEventListener("touchstart", () => {
-  const d = 40;   // 모바일은 약하게!
-  const a = Math.random() * Math.PI * 2;
 
-  noBtn.style.transform =
-    `translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px)`;
+// ===== NO 시스템 =====
+const noTexts = [
+  "진짜…?",
+  "다시 생각해줘 🥺",
+  "나 울어 😢",
+  "초코 줄게!",
+  "안아줄게 💗"
+];
+
+let noCount = 0;
+let yesScale = 1;
+
+noBtn.addEventListener("click", () => {
+
+  if (noCount < noTexts.length) {
+    title.textContent = noTexts[noCount];
+    noCount++;
+
+    // YES 점점 커지기
+    yesScale += 0.25;
+    yesBtn.style.transform = `scale(${yesScale})`;
+  }
+
+  if (noCount >= 5) {
+    noBtn.style.display = "none";
+  }
 });
+
 
 // ===== YES =====
 yesBtn.addEventListener("click", () => {
@@ -112,10 +121,10 @@ function createHeart() {
   heart.className = "heart";
   heart.textContent = "💖";
 
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.top = Math.random() * 80 + "vh";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.top = Math.random()*80 + "vh";
 
   document.getElementById("firework-container").appendChild(heart);
 
-  setTimeout(() => heart.remove(), 1400);
+  setTimeout(()=>heart.remove(), 1400);
 }
